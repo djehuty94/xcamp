@@ -42,8 +42,7 @@ library(plyr)
 library(scales)
 library(formattable)
 
-# Set working directory and load raw data from csv files
-setwd("~/MBF/2. Semester/Machine Learning/Group Project") # Automate / Read me
+# load raw data from csv files
 movie_data <- read.csv("movies.csv",stringsAsFactors=FALSE)
 movie_data
 rating_data <- read.csv("ratings.csv")
