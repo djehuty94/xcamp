@@ -1,11 +1,7 @@
-# Advanced Programming Languages Group Project
-Movie Recommendation System
-Team Members: Lorenzo Dei Tos, Federico Farhanghi, Valerie Großrieder, Roman Kastl, Nils Kaufmann, Marko Kosutov
-
-The base code for our project comes from Data Flair: https://data-flair.training/blogs/data-science-r-movie-recommendation/
-
 # HSG Movie Recommendation System
 Group project by Lorenzo Dei Tos, Federico Farhanghi, Valerie Grossrieder, Roman Kastl, Nils Kaufmann, and Marko Kosutov as part of the "Skills: Programming with Advanced Computer Languages" course during the Spring Semester 2020 at the University of St. Gallen.
+
+The base code for our project comes from Data Flair: https://data-flair.training/blogs/data-science-r-movie-recommendation/
 
 # Motivation
 We have developed a machine learning project to implement a Recommendation System with the objective of recommending movies to users. Recommendation Systems are gaining increasing attention from e-commerce platforms and online streaming services, e.g., Amazon, Netflix, YouTube. Companies are investing good portions of their budgets on the realisation of sophisticated Recommendation Systems. By analysing the customer’s preferences, companies can better identify the products and services with higher likelihood of purchase, and ultimately increase customer loyalty and retention.
