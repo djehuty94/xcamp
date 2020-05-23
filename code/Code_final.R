@@ -174,14 +174,14 @@ total_users <- nrow(user_data)
 
 descriptives <- as.data.frame(x = c(total_ratings, total_movies,total_users), row.names = c('Total ratings', 'Total movies', 'Total users'))
 colnames(descriptives) <- 'Values'
+descriptives$Values <- comma(descriptives$Values, big.mark = ',', digits = 0)
 
 formattable(descriptives, align = 'l')
 
 # Next, we might be interested in understanding which years the movies in our dataset are from.
 # To visualize this, we produce a line chart that shows in which years the largest number of the movies in our dataset are concentrated 
 
-movies_by_year <- count(movie_data,'year')
-plot(movies_by_year, xlab = "Year", ylab = "Movies in this year", main = "Distribution of movies by year")
+movies_by_year <- count(movie_data,'year') # we count the number of movies per year
 
 graph_distr_year <- ggplot(movies_by_year, aes(x = year, y = freq)) + geom_area(fill = 'dodgerblue2', alpha = 0.5) + geom_line(color = "midnightblue") + ggtitle("Distribution of movies by year") + xlab("Year") + ylab("Movies in this year") + theme_clean()
 graph_distr_year
@@ -199,7 +199,9 @@ sd(rating_data$rating)
 rating_table <- as.data.frame(table(rating_data$rating))
 rating_table$fraction <- round(((rating_table$Freq/total_ratings)*100), digits = 4)
 colnames(rating_table) <- c('rate', 'freq', 'fraction')
-rating_table
+rating_table$freq <- comma(rating_table$freq, big.mark = ',', digits = 0)
+
+formattable(rating_table, align = 'l')
 
 # We plot a line chart that makes it easier to visualize the most prevalent ratings in the sample
 graph_ratings <- ggplot(rating_table, aes(x = rate, y = fraction, group = 1)) + geom_line(size= 1, color = 'dodgerblue2') + geom_point(shape = 23, color = 'dodgerblue2', fill = 'white', size = 3) + 
@@ -224,7 +226,7 @@ top_20_reviewed <- movie_data[,c("title", "reviews")]
 like_data <- all_data[, c("title","like")]
 like_data <- aggregate(like ~ title,like_data, sum)
 
-top_20_reviewed <- merge(top_20_reviewed, like_data, by = 'title')
+top_20_reviewed <- merge(top_20_reviewed, like_data, by = 'title') # we merge the two sub datasets according to 'title'
 top_20_reviewed$like <- ((top_20_reviewed$like/top_20_reviewed$reviews)*100) #  we consider the number of positive reviews in % of the total reviews
 
 top_20_reviewed <- top_20_reviewed[order(-top_20_reviewed$reviews),] # we apply a decreasing order depending on the number of reviews
@@ -380,9 +382,8 @@ recommendation <- as.data.frame(cbind(knn_data[which(knn_data$watched == 0),"tit
 colnames(recommendation) <- c("title","probability")
 recommendation <- recommendation[order(recommendation$probability, decreasing = TRUE),]
 recommended_titles <- recommendation[1:10,"title"]
-recommended_titles
 
-formattable(recommended_titles, align = 'l') # COULD YOU CHECK IF IT WORKS?
+formattable(recommended_titles, align = 'l')
 
 # Logistic Regression
 
