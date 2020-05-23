@@ -197,15 +197,15 @@ mean(rating_data$rating)
 median(rating_data$rating)
 sd(rating_data$rating)
 rating_table <- as.data.frame(table(rating_data$rating))
-rating_table$fraction <- round(((rating_table$Freq/total_ratings)*100), digits = 4)
-colnames(rating_table) <- c('rate', 'freq', 'fraction')
-rating_table$freq <- comma(rating_table$freq, big.mark = ',', digits = 0)
+rating_table$fraction <- round(((rating_table$Freq/total_ratings)*100), digits = 2)
+colnames(rating_table) <- c('rating', 'frequency', 'fraction')
+rating_table$frequency <- comma(rating_table$frequency, big.mark = ',', digits = 0)
 
 formattable(rating_table, align = 'l')
 
 # We plot a line chart that makes it easier to visualize the most prevalent ratings in the sample
-graph_ratings <- ggplot(rating_table, aes(x = rate, y = fraction, group = 1)) + geom_line(size= 1, color = 'dodgerblue2') + geom_point(shape = 23, color = 'dodgerblue2', fill = 'white', size = 3) + 
-  theme_clean() + xlab("Rate") + ylab('Percentage') + ggtitle('Rating prevalence', subtitle = 'Mid/high ratings seem to be prevalent in the sample')
+graph_ratings <- ggplot(rating_table, aes(x = rating, y = fraction, group = 1)) + geom_line(size= 1, color = 'dodgerblue2') + geom_point(shape = 23, color = 'dodgerblue2', fill = 'white', size = 3) + 
+  theme_clean() + xlab("Rating") + ylab('Percentage') + ggtitle('Rating prevalence', subtitle = 'Mid/high ratings seem to be prevalent in the sample')
 
 graph_ratings
 
@@ -305,7 +305,7 @@ graph_top_genres
 # movie characteristics that are helpful for making recommendations to new / unknown users
 
 # We first select the features and movies that shall be considered by the decision tree algorithm
-b <- which(all_data$reviews >=25)
+b <- which(all_data$reviews >=20)
 tree_data <- all_data[b,c(5,9,28,29,30,33,34,35)]
 
 # In the next step the tree is created and we obtain the summary of the decision tree characteristics
@@ -321,8 +321,8 @@ indicating that this criterion dominates other criteria. Thus, whether
 the movie belongs to the user's favorite genre, whether it is an old movie
 and the number of reviews as an indicator for popularity seem to be a far 
 less important factors for whether a user will like a movie than the
-assessment by the community. If a movie has an average rating of e.g. > 3.87,
-the probability that a given user will like it is about 83.2%. Therefore a 
+assessment by the community. If a movie has an average rating of e.g. > 3.79,
+the probability that a given user will like it is about 81.9%. Therefore a 
 simple approach would be to recommend the best rated movies, regardless of
 the genre etc.")
 
@@ -381,7 +381,8 @@ knn_probabilities <- attributes(knn_output)$prob
 recommendation <- as.data.frame(cbind(knn_data[which(knn_data$watched == 0),"title"], knn_probabilities))
 colnames(recommendation) <- c("title","probability")
 recommendation <- recommendation[order(recommendation$probability, decreasing = TRUE),]
-recommended_titles <- recommendation[1:10,"title"]
+recommended_titles <- as.data.frame(recommendation[1:10,"title"])
+colnames(recommended_titles) <- c("Recommendation List")
 
 formattable(recommended_titles, align = 'l')
 
@@ -400,8 +401,10 @@ glm.probs <- as.data.frame(predict(logistic_regression,data.predict,type ="respo
 # Again, we combine the data, sort it and make our recommendation based on the highest like probabilities
 log_reg_recommendations <- cbind(knn_data[which(knn_data$watched == 0),"title"],glm.probs)
 colnames(log_reg_recommendations) <- c("title","probability")
-log_reg_recommendations <- log_reg_recommendations[order(log_reg_recommendations$probability, decreasing = TRUE),]
-head(log_reg_recommendations)
+log_reg_recommendations$probability <- round((log_reg_recommendations$probability*100), digits = 4)
+log_reg_recommendations <- as.data.frame(log_reg_recommendations[order(log_reg_recommendations$probability, decreasing = TRUE),])
+log_reg_recommendations <- head(log_reg_recommendations, n=10)
+formattable(log_reg_recommendations, align = 'l')
 
 # Predictions based on the recommenderlab library
 
@@ -522,7 +525,12 @@ for (index in 1:10){
   movies_user2[index] <- as.character(subset(movie_data,
                                              movie_data$movieId == movies_user1[index])$title)
 }
-movies_user2
+movies_user2 <- as.data.frame(movies_user2)
+colnames(movies_user2) <- c("Recommendation List")
+formattable(movies_user2, align = 'l')
+
+# Interestingly the outputs from the three reccomendation systems do not match. This shows how difficult
+# it is to make accurate predictions based on user level data. 
 
 ####################################################################
 # Part 5: Perceptron algorithm
