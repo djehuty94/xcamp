@@ -382,6 +382,8 @@ recommendation <- recommendation[order(recommendation$probability, decreasing = 
 recommended_titles <- recommendation[1:10,"title"]
 recommended_titles
 
+formattable(recommended_titles, align = 'l') # COULD YOU CHECK IF IT WORKS?
+
 # Logistic Regression
 
 # Like in the knn algorithm we compute the likelihood that a user will enjoy the movies he/she
