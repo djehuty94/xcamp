@@ -314,7 +314,7 @@ summary(movie_tree)
 plot(movie_tree)
 text(movie_tree)
 
-"Interpretation: the algorithm only uses the average rating as a criterion,
+cat("Interpretation: the algorithm only uses the average rating as a criterion,
 indicating that this criterion dominates other criteria. Thus, whether
 the movie belongs to the user's favorite genre, whether it is an old movie
 and the number of reviews as an indicator for popularity seem to be a far 
@@ -322,7 +322,7 @@ less important factors for whether a user will like a movie than the
 assessment by the community. If a movie has an average rating of e.g. > 3.87,
 the probability that a given user will like it is about 83.2%. Therefore a 
 simple approach would be to recommend the best rated movies, regardless of
-the genre etc."
+the genre etc.")
 
 ####################################################################
 # Part 4: Movie Recommendation
@@ -452,7 +452,7 @@ image(movie_ratings[rowCounts(movie_ratings) > minimum_movies,
       main = "Heatmap of the top users and movies")
 
 # we now normalize the data to avoid biases
-normalized_ratings <- normalize(movie_ratings)
+normalized_ratings <- recommenderlab::normalize(movie_ratings)
 sum(rowMeans(normalized_ratings) > 0.00001)
 
 image(normalized_ratings[rowCounts(normalized_ratings) > minimum_movies,
