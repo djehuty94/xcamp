@@ -1,7 +1,7 @@
 ####################################################################
 # Advanced Programming Languages Group Project
 # Movie Recommendation System
-# Team Members: Lorenzo Dei Tos, Federico Farhanghi, Valerie Groﬂrieder,
+# Team Members: Lorenzo Dei Tos, Federico Farhanghi, Valerie Gro√ürieder,
 #               Roman Kastl, Nils Kaufmann, Marko Kosutov
 ####################################################################
 
