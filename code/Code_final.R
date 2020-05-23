@@ -521,11 +521,6 @@ for (index in 1:10){
 }
 movies_user2
 
-# finally we display the recommendation matrix for each user
-recommendation_matrix <- sapply(predicted_recommendations@items,
-                                function(x){ as.integer(colnames(movie_ratings)[x]) }) 
-recommendation_matrix[,1:4]
-
 ####################################################################
 # Part 5: Perceptron algorithm
 ####################################################################
